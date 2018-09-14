@@ -1,5 +1,5 @@
 # maven-project
-Source code for SANITH Lee's Jenkins course.
+Source code for SANITH's Jenkins course.
 
 Check out our Latest DevOps PDF book.
 
