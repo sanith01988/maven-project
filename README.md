@@ -1,5 +1,5 @@
 # maven-project
-S HAI Source code for SANITH's Jenkins course.
+ HAI Source code for SANITH's Jenkins course.
 
 Check out our Latest DevOps PDF book.
 
