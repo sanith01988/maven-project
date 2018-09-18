@@ -1,42 +1,37 @@
-pipeline {
+peline
+{
     agent any
+    parameters{
+        string(name: 'tomcat_dev', defaultValue: '192.168.1.155', description: 'Staging Server')
+    }
+    triggers{
+        pollSCM('* * * * *')
+    }
     stages{
         stage('Build'){
-            steps {
+            step{
                 sh 'mvn clean package'
             }
-            post {
-                success {
-                    echo 'Now Archiving...'
+            post{
+                success{
+                     echo 'Now Archiving...'
                     archiveArtifacts artifacts: '**/target/*.war'
                 }
             }
         }
-        stage ('Deploy to Staging'){
-            steps {
-                build job: 'deploy-to-staging'
-            }
-        }
-
-        stage ('Deploy to Production'){
-            steps{
-                timeout(time:5, unit:'DAYS'){
-                    input message:'Approve PRODUCTION Deployment?'
+        stage('Deployments'){
+            parallel{
+                stage('Deploy to Staging'){
+                    steps{
+                    sh "sshpass -p 'Think@123' scp **/target/*.war thinkpalm@${params.tomcat_dev}:/opt/tomcat/webapps"
                 }
-
-                build job: 'prod-deploy'
-            }
-            post {
-                success {
-                    echo 'Code deployed to Production.'
                 }
-
-                failure {
-                    echo ' Deployment failed.'
+                stage('Deploy to Production'){
+                    steps{
+                        sh "sshpass -p 'Think@123' scp **/target/*.war thinkpalm@${params.tomcat_dev}:/opt/tomcat-prod/webapps"
+                    }
                 }
             }
         }
-
-
     }
 }
