@@ -23,12 +23,12 @@ pipeline
             parallel{
                 stage('Deploy to Staging'){
                     steps{
-                    sh "echo 'Think@123' | scp **/target/*.war thinkpalm@${params.tomcat_dev}:/opt/tomcat/webapps"
+                    sh "sshpass -p "Think@123" scp **/target/*.war thinkpalm@${params.tomcat_dev}:/opt/tomcat/webapps"
                 }
                 }
                 stage('Deploy to Production'){
                     steps{
-                        sh "echo 'Think@123' | scp **/target/*.war thinkpalm@${params.tomcat_dev}:/opt/tomcat-prod/webapps"
+                        sh "sshpass -p "Think@123"  scp **/target/*.war thinkpalm@${params.tomcat_dev}:/opt/tomcat-prod/webapps"
                     }
                 }
             }
