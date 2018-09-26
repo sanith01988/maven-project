@@ -1,9 +1,5 @@
 pipeline {
-    agent{
-        node{
-            lable 'master'
-            customWorkspace 'SMARTShip'
-        }
+    agent any
     }
     triggers{
         pollSCM('* * * * *')
